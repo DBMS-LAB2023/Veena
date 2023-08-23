@@ -1,0 +1,120 @@
+sudo mysql
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.34-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use instructor;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table employee (eid int not null,ename varchar(20) not null,did int not null,salary int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee(eid,ename,did,salary) values(1,"biju",100,8000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eid,ename,did,salary) values(2,"dhiana",101,60000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eid,ename,did,salary) values(3,"ansala",102,65000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eid,ename,did,salary) values(4,"anu",103,9000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee;
++-----+--------+-----+--------+
+| eid | ename  | did | salary |
++-----+--------+-----+--------+
+|   1 | biju   | 100 |   8000 |
+|   2 | dhiana | 101 |  60000 |
+|   3 | ansala | 102 |  65000 |
+|   4 | anu    | 103 |   9000 |
++-----+--------+-----+--------+
+4 rows in set (0.00 sec)
+
+mysql> create table dept(did int references employee(did),dname varchar(20) not null);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into dept(did,dname) values(100,"production");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept(did,dname) values(102,"sales");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into dept(did,dname) values(103,"it");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select count(*)as number_of_employee from employee;
++--------------------+
+| number_of_employee |
++--------------------+
+|                  4 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select did,sum(salary) from employee group by did;
++-----+-------------+
+| did | sum(salary) |
++-----+-------------+
+| 100 |        8000 |
+| 101 |       60000 |
+| 102 |       65000 |
+| 103 |        9000 |
++-----+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(salary) fromemployee where did-100;
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select sum(salary) from employee where did-100;
++-------------+
+| sum(salary) |
++-------------+
+|      134000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select did,avg(salary)as average_salary from employee group by did;
++-----+----------------+
+| did | average_salary |
++-----+----------------+
+| 100 |      8000.0000 |
+| 101 |     60000.0000 |
+| 102 |     65000.0000 |
+| 103 |      9000.0000 |
++-----+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select did,min(salary)as minimum_salary from employee group by did;
++-----+----------------+
+| did | minimum_salary |
++-----+----------------+
+| 100 |           8000 |
+| 101 |          60000 |
+| 102 |          65000 |
+| 103 |           9000 |
++-----+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select did,count(*) as number_of_employees from employee group by did;
++-----+---------------------+
+| did | number_of_employees |
++-----+---------------------+
+| 100 |                   1 |
+| 101 |                   1 |
+| 102 |                   1 |
+| 103 |                   1 |
++-----+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> 

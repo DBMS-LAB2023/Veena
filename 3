@@ -1,0 +1,317 @@
+sudo mysql
+[sudo] password for mca: 
+Sorry, try again.
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table employee;
+ERROR 1046 (3D000): No database selected
+mysql> create table employee
+    -> 
+
+^C
+mysql> create database employee
+    -> 
+    -> 
+
+^C
+mysql> create database employee;
+ERROR 1007 (HY000): Can't create database 'employee'; database exists
+mysql> create database emp;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> create table emp;
+ERROR 1046 (3D000): No database selected
+mysql> use emp;
+Database changed
+mysql> create table emp;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table emp (Eno int,Ename varchar(20),Ejob varchar(20),Edept varchar(20));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> describe emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Eno   | int         | YES  |     | NULL    |       |
+| Ename | varchar(20) | YES  |     | NULL    |       |
+| Ejob  | varchar(20) | YES  |     | NULL    |       |
+| Edept | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table emp add Esalary int;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emp add EbasicPay int;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Eno       | int         | YES  |     | NULL    |       |
+| Ename     | varchar(20) | YES  |     | NULL    |       |
+| Ejob      | varchar(20) | YES  |     | NULL    |       |
+| Edept     | varchar(20) | YES  |     | NULL    |       |
+| Esalary   | int         | YES  |     | NULL    |       |
+| EbasicPay | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into emp values(101,"Ben","Analist",101,10000,80000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(102,"John","Analist",101,9000,80000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(103,"Ruby","Clerk",105,5000,4000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(104,"Lia","Clerk",105,6000,4000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(105,"Teena","Manager",107,15000,10000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(105,"Hina","Manager",107,17000,10000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp values(106,"Nibrazz","CEO",110,25000,20000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(107,"Nidha","Manager",107,18000,10000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from emp order by Eno asc;
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  101 | Ben     | Analist | 101   |   10000 |     80000 |
+|  102 | John    | Analist | 101   |    9000 |     80000 |
+|  103 | Ruby    | Clerk   | 105   |    5000 |      4000 |
+|  104 | Lia     | Clerk   | 105   |    6000 |      4000 |
+|  105 | Teena   | Manager | 107   |   15000 |     10000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
++------+---------+---------+-------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp;
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  101 | Ben     | Analist | 101   |   10000 |     80000 |
+|  102 | John    | Analist | 101   |    9000 |     80000 |
+|  103 | Ruby    | Clerk   | 105   |    5000 |      4000 |
+|  104 | Lia     | Clerk   | 105   |    6000 |      4000 |
+|  105 | Teena   | Manager | 107   |   15000 |     10000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
++------+---------+---------+-------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select Ebasicpay/2 from emp;
++-------------+
+| Ebasicpay/2 |
++-------------+
+|  40000.0000 |
+|  40000.0000 |
+|   2000.0000 |
+|   2000.0000 |
+|   5000.0000 |
+|   5000.0000 |
+|  10000.0000 |
+|   5000.0000 |
++-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from Ename where name like 'B%';
+ERROR 1146 (42S02): Table 'emp.Ename' doesn't exist
+mysql> select * from emp where Ename like 'B%';
++------+-------+---------+-------+---------+-----------+
+| Eno  | Ename | Ejob    | Edept | Esalary | EbasicPay |
++------+-------+---------+-------+---------+-----------+
+|  101 | Ben   | Analist | 101   |   10000 |     80000 |
++------+-------+---------+-------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where Ename like '_i%' and '_u%';
+Empty set, 1 warning (0.00 sec)
+
+mysql> select * from emp where Ename like '_i%' '_u%';
+Empty set (0.00 sec)
+
+mysql> select * from emp where Ename like '_i%' or '_u%';
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  104 | Lia     | Clerk   | 105   |    6000 |      4000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
++------+---------+---------+-------+---------+-----------+
+4 rows in set, 1 warning (0.00 sec)
+
+mysql> select * from emp where Ename like '_u%' or '_i%';
++------+-------+-------+-------+---------+-----------+
+| Eno  | Ename | Ejob  | Edept | Esalary | EbasicPay |
++------+-------+-------+-------+---------+-----------+
+|  103 | Ruby  | Clerk | 105   |    5000 |      4000 |
++------+-------+-------+-------+---------+-----------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select * from emp where Esalary between 10000 and 30000;
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  101 | Ben     | Analist | 101   |   10000 |     80000 |
+|  105 | Teena   | Manager | 107   |   15000 |     10000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
++------+---------+---------+-------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select Ejob from emp;
++---------+
+| Ejob    |
++---------+
+| Analist |
+| Analist |
+| Clerk   |
+| Clerk   |
+| Manager |
+| Manager |
+| CEO     |
+| Manager |
++---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp where Esalary not between 10000 and 30000;
++------+-------+---------+-------+---------+-----------+
+| Eno  | Ename | Ejob    | Edept | Esalary | EbasicPay |
++------+-------+---------+-------+---------+-----------+
+|  102 | John  | Analist | 101   |    9000 |     80000 |
+|  103 | Ruby  | Clerk   | 105   |    5000 |      4000 |
+|  104 | Lia   | Clerk   | 105   |    6000 |      4000 |
++------+-------+---------+-------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select name from emp where Esalary not between 10000 and 30000;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select Ename from emp where Esalary not between 10000 and 30000;
++-------+
+| Ename |
++-------+
+| John  |
+| Ruby  |
+| Lia   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select Ename and Ejob from emp where Ejob="Clerk","Manager","Analist";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',"Manager","Analist"' at line 1
+mysql> select Ename and Ejob from emp where Ejob in ("Clerk","Manager","Analist"
+);
++----------------+
+| Ename and Ejob |
++----------------+
+|              0 |
+|              0 |
+|              0 |
+|              0 |
+|              0 |
+|              0 |
+|              0 |
++----------------+
+7 rows in set, 7 warnings (0.00 sec)
+
+mysql> select * from emp where Ejob in ("Clerk","Manager","Analist");
++------+-------+---------+-------+---------+-----------+
+| Eno  | Ename | Ejob    | Edept | Esalary | EbasicPay |
++------+-------+---------+-------+---------+-----------+
+|  101 | Ben   | Analist | 101   |   10000 |     80000 |
+|  102 | John  | Analist | 101   |    9000 |     80000 |
+|  103 | Ruby  | Clerk   | 105   |    5000 |      4000 |
+|  104 | Lia   | Clerk   | 105   |    6000 |      4000 |
+|  105 | Teena | Manager | 107   |   15000 |     10000 |
+|  105 | Hina  | Manager | 107   |   17000 |     10000 |
+|  107 | Nidha | Manager | 107   |   18000 |     10000 |
++------+-------+---------+-------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select Ename from emp where Ejob in ("Clerk","Manager","Analist");
++-------+
+| Ename |
++-------+
+| Ben   |
+| John  |
+| Ruby  |
+| Lia   |
+| Teena |
+| Hina  |
+| Nidha |
++-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from emp order by Eno desc;
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  105 | Teena   | Manager | 107   |   15000 |     10000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  104 | Lia     | Clerk   | 105   |    6000 |      4000 |
+|  103 | Ruby    | Clerk   | 105   |    5000 |      4000 |
+|  102 | John    | Analist | 101   |    9000 |     80000 |
+|  101 | Ben     | Analist | 101   |   10000 |     80000 |
++------+---------+---------+-------+---------+-----------+
+8 rows in set (0.01 sec)
+
+mysql> select * from emp order by Esalary desc;
++------+---------+---------+-------+---------+-----------+
+| Eno  | Ename   | Ejob    | Edept | Esalary | EbasicPay |
++------+---------+---------+-------+---------+-----------+
+|  106 | Nibrazz | CEO     | 110   |   25000 |     20000 |
+|  107 | Nidha   | Manager | 107   |   18000 |     10000 |
+|  105 | Hina    | Manager | 107   |   17000 |     10000 |
+|  105 | Teena   | Manager | 107   |   15000 |     10000 |
+|  101 | Ben     | Analist | 101   |   10000 |     80000 |
+|  102 | John    | Analist | 101   |    9000 |     80000 |
+|  104 | Lia     | Clerk   | 105   |    6000 |      4000 |
+|  103 | Ruby    | Clerk   | 105   |    5000 |      4000 |
++------+---------+---------+-------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> create table passenger (pnr_no int,ticket_no int,name varchar(20),age int,gender varchar(20),contact_no int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc passenger;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| pnr_no     | int         | YES  |     | NULL    |       |
+| ticket_no  | int         | YES  |     | NULL    |       |
+| name       | varchar(20) | YES  |     | NULL    |       |
+| age        | int         | YES  |     | NULL    |       |
+| gender     | varchar(20) | YES  |     | NULL    |       |
+| contact_no | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+

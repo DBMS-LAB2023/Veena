@@ -1,0 +1,87 @@
+mysql> select * from employee;
++--------+------------+------------+----------+----------------+-------------+
+| emp_no | emp_job    | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+------------+------------+----------+----------------+-------------+
+|      1 | accountant |      20000 | shifna   |            200 |           6 |
+|      2 | tester     |      40000 | noora    |            201 |           7 |
+|      3 | sales      |      50000 | veena    |            202 |           8 |
+|      4 | manager    |      60000 | nidha    |            203 |           9 |
+|      5 | marketing  |     300000 | rafi     |            204 |           8 |
+|      6 | hr         |     400000 | shifna   |            204 |          10 |
+|      7 | accountant |      40000 | arjun    |            205 |           2 |
++--------+------------+------------+----------+----------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee ORDER BY emp_salary ASC;
++--------+------------+------------+----------+----------------+-------------+
+| emp_no | emp_job    | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+------------+------------+----------+----------------+-------------+
+|      1 | accountant |      20000 | shifna   |            200 |           6 |
+|      2 | tester     |      40000 | noora    |            201 |           7 |
+|      7 | accountant |      40000 | arjun    |            205 |           2 |
+|      3 | sales      |      50000 | veena    |            202 |           8 |
+|      4 | manager    |      60000 | nidha    |            203 |           9 |
+|      5 | marketing  |     300000 | rafi     |            204 |           8 |
+|      6 | hr         |     400000 | shifna   |            204 |          10 |
++--------+------------+------------+----------+----------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee where emp_dprtmnt_no=204;
++--------+-----------+------------+----------+----------------+-------------+
+| emp_no | emp_job   | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+-----------+------------+----------+----------------+-------------+
+|      5 | marketing |     300000 | rafi     |            204 |           8 |
+|      6 | hr        |     400000 | shifna   |            204 |          10 |
++--------+-----------+------------+----------+----------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct emp_dprtmnt_no from employee;
++----------------+
+| emp_dprtmnt_no |
++----------------+
+|            200 |
+|            201 |
+|            202 |
+|            203 |
+|            204 |
+|            205 |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee where emp_job like 'm%';
++--------+-----------+------------+----------+----------------+-------------+
+| emp_no | emp_job   | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+-----------+------------+----------+----------------+-------------+
+|      4 | manager   |      60000 | nidha    |            203 |           9 |
+|      5 | marketing |     300000 | rafi     |            204 |           8 |
++--------+-----------+------------+----------+----------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct emp_name where emp_job="accountant";
+ERROR 1054 (42S22): Unknown column 'emp_name' in 'field list'
+mysql> select emp_name from employee where emp_job=(select emp_job from employee where emp_name="arjun");
++----------+
+| emp_name |
++----------+
+| shifna   |
+| arjun    |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) from employee;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select MIN(emp_salary),MAX(emp_salary) from employee;
++-----------------+-----------------+
+| MIN(emp_salary) | MAX(emp_salary) |
++-----------------+-----------------+
+|           20000 |          400000 |
++-----------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> 

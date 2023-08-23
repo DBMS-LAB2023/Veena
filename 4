@@ -1,0 +1,82 @@
+create database hn;
+use hn;
+create table student(sid int primary key,sname varchar(20),course varchar(20),semester int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into student values(101,"Hina","MCA",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(102,"Hana","MCA",2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(103,"Nibrazz","MCA",4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(104,"Nidha","MCA",4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from student;
++-----+---------+--------+----------+
+| sid | sname   | course | semester |
++-----+---------+--------+----------+
+| 101 | Hina    | MCA    |        2 |
+| 102 | Hana    | MCA    |        2 |
+| 103 | Nibrazz | MCA    |        4 |
+| 104 | Nidha   | MCA    |        4 |
++-----+---------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> create table book(book_id int primary key,book_name varchar(20),author_n
+ame varchar(20));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into book values(1100,"Into The Ocean","Alyn");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into book values(1101,"Depth Of Your Eyes","Nicole");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into book values(1102,"Its Not A War","Alex");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into book values(1103,"Till This Ends","Louis");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from book;
++---------+--------------------+-------------+
+| book_id | book_name          | author_name |
++---------+--------------------+-------------+
+|    1100 | Into The Ocean     | Alyn        |
+|    1101 | Depth Of Your Eyes | Nicole      |
+|    1102 | Its Not A War      | Alex        |
+|    1103 | Till This Ends     | Louis       |
++---------+--------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> create table issue(book_id int,foreign key(book_id) references book(book_id),sid int,foreign key(sid) references student(sid),issue_date date);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into issue(book_id,sid,issue_date) values(1100,101,'2015-10-31'),(1101,102,'2016-05-04'),(1102,103,'2017-11-07');
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *from issue;
++---------+------+------------+
+| book_id | sid  | issue_date |
++---------+------+------------+
+|    1100 |  101 | 2015-10-31 |
+|    1101 |  102 | 2016-05-04 |
+|    1102 |  103 | 2017-11-07 |
++---------+------+------------+
+3 rows in set (0.00 sec)
+select book.book_name , issue_date from book inner join issue on book.book_id=issue.book_id where issue.issue_date='2015-10-31';
++----------------+------------+
+| book_name      | issue_date |
++----------------+------------+
+| Into The Ocean | 2015-10-31 |
++----------------+------------+
+1 row in set (0.01 sec)
+select student.* from student inner join issue on student.sid=issue.sid where issue.book_id=(select book.book_id from book inner join issue on book.book_id=issue.book_id where book.book_name="Depth Of Your Eyes" group by book.book_id);
+select student.sname as first_sem_students from student inner join issue on student.sid=issue.sid where student.sem="first" group by student.sname;
+select book.bookname as book_name from book inner join issue on book.bookid =issue.bookid where issue.sid=(select student.sid from student inner join issue on student.sid=issue.sid where student.sname="deepa");
+select student.sname from student inner join issue on student.sid =issue.sid where issue.bookid=(select book.bookid from book inner join issue on book.bookid=issue.bookid where book.author="peter" group by book.bookid);

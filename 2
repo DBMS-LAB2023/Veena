@@ -1,0 +1,104 @@
+select * from employee;
++--------+------------+------------+----------+----------------+-------------+
+| emp_no | emp_job    | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+------------+------------+----------+----------------+-------------+
+|      1 | accountant |      20000 | shifna   |            200 |           6 |
+|      2 | tester     |      40000 | noora    |            201 |           7 |
+|      3 | sales      |      50000 | veena    |            202 |           8 |
+|      4 | manager    |      60000 | nidha    |            203 |           9 |
+|      5 | marketing  |     300000 | rafi     |            204 |           8 |
+|      6 | hr         |     400000 | shifna   |            204 |          10 |
+|      7 | accountant |      40000 | arjun    |            205 |           2 |
+|      8 | clerk      |       8000 | murali   |            206 |           2 |
+|      9 | analyst    |      15000 | muneer   |            208 |           5 |
++--------+------------+------------+----------+----------------+-------------+
+2.
+select emp_salary/2 from employee;
++--------------+
+| emp_salary/2 |
++--------------+
+|   10000.0000 |
+|   20000.0000 |
+|   25000.0000 |
+|   30000.0000 |
+|  150000.0000 |
+|  200000.0000 |
+|   20000.0000 |
+|    4000.0000 |
+|    7500.0000 |
++--------------+
+3.
+select emp_name from employee where emp_name like 'm%';
++----------+
+| emp_name |
++----------+
+| murali   |
+| muneer   |
++----------+
+4.
+select emp_name from employee where (emp_name like '_i%' or emp_name like '_u%');
++----------+
+| emp_name |
++----------+
+| nidha    |
+| murali   |
+| muneer   |
++----------+
+5.
+select * from employee where (emp_salary between 10000 and 30000);
++--------+------------+------------+----------+----------------+-------------+
+| emp_no | emp_job    | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+------------+------------+----------+----------------+-------------+
+|      1 | accountant |      20000 | shifna   |            200 |           6 |
+|      9 | analyst    |      15000 | muneer   |            208 |           5 |
++--------+------------+------------+----------+----------------+-------------+
+6.
+select emp_job from employee;
++------------+
+| emp_job    |
++------------+
+| accountant |
+| tester     |
+| sales      |
+| manager    |
+| marketing  |
+| hr         |
+| accountant |
+| clerk      |
+| analyst    |
++------------+
+7.
+select emp_name from employee where (emp_salary between 10000 and 50000);
++----------+
+| emp_name |
++----------+
+| shifna   |
+| noora    |
+| veena    |
+| arjun    |
+| muneer   |
++----------+
+8.
+select emp_name,emp_job from employee where (emp_job='clerk' or emp_job='manager' or emp_job='analyst');
++----------+---------+
+| emp_name | emp_job |
++----------+---------+
+| nidha    | manager |
+| murali   | clerk   |
+| muneer   | analyst |
++----------+---------+
+9.
+select * from employee ORDER BY emp_salary DESC;
++--------+------------+------------+----------+----------------+-------------+
+| emp_no | emp_job    | emp_salary | emp_name | emp_dprtmnt_no | emp_exprnce |
++--------+------------+------------+----------+----------------+-------------+
+|      6 | hr         |     400000 | shifna   |            204 |          10 |
+|      5 | marketing  |     300000 | rafi     |            204 |           8 |
+|      4 | manager    |      60000 | nidha    |            203 |           9 |
+|      3 | sales      |      50000 | veena    |            202 |           8 |
+|      2 | tester     |      40000 | noora    |            201 |           7 |
+|      7 | accountant |      40000 | arjun    |            205 |           2 |
+|      1 | accountant |      20000 | shifna   |            200 |           6 |
+|      9 | analyst    |      15000 | muneer   |            208 |           5 |
+|      8 | clerk      |       8000 | murali   |            206 |           2 |
++--------+------------+------------+----------+----------------+-------------+
