@@ -1,0 +1,108 @@
+sudo mysql
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.34-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database instructor;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table instructor(id primary key,name varchar(50),dept_name varchar(50),salary int(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key,name varchar(50),dept_name varchar(50),salary int(30))' at line 1
+mysql> create table instructor(id int primary key,name varchar(50),dept_name varchar(50),salary int(30));
+ERROR 1046 (3D000): No database selected
+mysql> use instructor;
+Database changed
+mysql> create table instructor(id int primary key,name varchar(50),dept_name varchar(50),salary int(30));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> insert into instructor(id,name,dept_name,salary)values(101,"anu","it",250000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into instructor(id,name,dept_name,salary)values(102,"manu","computer",450000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into instructor(id,name,dept_name,salary)values(103,"anju","management",400000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into instructor(id,name,dept_name,salary)values(104,"sree","computer",450000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into instructor(id,name,dept_name,salary)values(105,"aami","commerce",500000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from instructor;
++-----+------+------------+--------+
+| id  | name | dept_name  | salary |
++-----+------+------------+--------+
+| 101 | anu  | it         | 250000 |
+| 102 | manu | computer   | 450000 |
+| 103 | anju | management | 400000 |
+| 104 | sree | computer   | 450000 |
+| 105 | aami | commerce   | 500000 |
++-----+------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create table teacher(tid int,course_id int references instructor(id));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into teacher(tid,course_id)values(9,101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher(tid,course_id)values(10,102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher(tid,course_id)values(11,103);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher(tid,course_id)values(12,104);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher(tid,course_id)values(13,104);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from teacher;
++------+-----------+
+| tid  | course_id |
++------+-----------+
+|    9 |       101 |
+|   10 |       102 |
+|   11 |       103 |
+|   12 |       104 |
+|   13 |       104 |
++------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select id,tid,name,salary from instructor right outer join teacher on instructor.id=teacher.course_id;
++------+------+------+--------+
+| id   | tid  | name | salary |
++------+------+------+--------+
+|  101 |    9 | anu  | 250000 |
+|  102 |   10 | manu | 450000 |
+|  103 |   11 | anju | 400000 |
+|  104 |   12 | sree | 450000 |
+|  104 |   13 | sree | 450000 |
++------+------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from instructor join teacher on instructor.id=teacher.course_id; 
++-----+------+------------+--------+------+-----------+
+| id  | name | dept_name  | salary | tid  | course_id |
++-----+------+------------+--------+------+-----------+
+| 101 | anu  | it         | 250000 |    9 |       101 |
+| 102 | manu | computer   | 450000 |   10 |       102 |
+| 103 | anju | management | 400000 |   11 |       103 |
+| 104 | sree | computer   | 450000 |   12 |       104 |
+| 104 | sree | computer   | 450000 |   13 |       104 |
++-----+------+------------+--------+------+-----------+
+5 rows in set (0.00 sec)
+
+

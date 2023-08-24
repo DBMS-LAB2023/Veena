@@ -1,0 +1,136 @@
+sudo mysql
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.34-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use instructor;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create sailors(sid int primary key,sname varchar(50),rating float,age int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sailors(sid int primary key,sname varchar(50),rating float,age int)' at line 1
+mysql> create table sailors(sid int primary key,sname varchar(50),rating float,a
+ge int);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into sailors values(20,"horatio",9,55);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sailors values(21,"denis",10,40);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sailors values(22,"harley",5.5,50);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sailors values(23,"dain",10,36);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sailors values(24,"jaison",8,58);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from sailors
+    -> select * from sailors;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from sailors' at line 2
+mysql> select * from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  20 | horatio |      9 |   55 |
+|  21 | denis   |     10 |   40 |
+|  22 | harley  |    5.5 |   50 |
+|  23 | dain    |     10 |   36 |
+|  24 | jaison  |      8 |   58 |
++-----+---------+--------+------+
+5 rows in set (0.01 sec)
+
+mysql> create table boats(bid int primary key,bname varchar(50),bcolor varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into boats values(10,"island",'blue');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into boats values(101,"island",'blue');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into boats values(102,"speed",'red');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into boats values(22,"wind",'green');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into boats values(23,"marine",'white');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from boats;
++-----+--------+--------+
+| bid | bname  | bcolor |
++-----+--------+--------+
+|  10 | island | blue   |
+|  22 | wind   | green  |
+|  23 | marine | white  |
+| 101 | island | blue   |
+| 102 | speed  | red    |
++-----+--------+--------+
+5 rows in set (0.00 sec)
+create table reserle(sid int,bid int,day date);
+Query OK, 0 rows affected (0.01 sec)
+insert into reserle values(34, 106, '1998-10-14');
+Query OK, 1 row affected (0.00 sec)
+insert into reserle values(21, 101, '1968-10-14');
+Query OK, 1 row affected (0.00 sec)
+select s.sname from sailors s where s.sid not in ( select r.sid from reserle r where r.bid in (select b.bid from boats b where b.bcolor='red'));
++---------+
+| sname   |
++---------+
+| horatio |
+| denis   |
+| harley  |
+| dain    |
+| jaison  |
++---------+
+5 rows in set (0.00 sec)
+select s1.sname from sailors s1 where s1.rating > any ( select s2.rating from sailors s2 where s2.sname='horatio');
++-------+
+| sname |
++-------+
+| denis |
+| dain  |
++-------+
+2 rows in set (0.00 sec)
+select s1.sname from sailors s1 where s1.rating >= all ( select s2.rating from sailors s2);
++-------+
+| sname |
++-------+
+| denis |
+| dain  |
++-------+
+2 rows in set (0.00 sec)
+select s.sname,s.age from sailors s where s.age=(select max(s2.age)from sailors s2);
++--------+------+
+| sname  | age  |
++--------+------+
+| jaison |   58 |
++--------+------+
+1 row in set (0.00 sec)
+select s.sname from sailors s where s.age>(select max(s2.age)from sailors s2 where s2.rating=10);
++---------+
+| sname   |
++---------+
+| horatio |
+| harley  |
+| jaison  |
++---------+
+3 rows in set (0.00 sec)
+
+
+
